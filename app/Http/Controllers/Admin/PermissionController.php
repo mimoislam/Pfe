@@ -20,14 +20,14 @@ class PermissionController extends Controller
 
         Permission::create($validated);   
 
-        return to_route('admin.permissions.index');
+        return to_route('admin.permissions.index')->with('message','Permission created');;
     }
 
 
     public function edit(Permission $permission){
         
-
-        return to_route('admin.permissions.edit', compact('permission'));
+        $roles = Role::all();
+        return to_route('admin.permissions.edit', compact('permission','roles'));
     }
 
     public function update(Request $request,Permission $permission){
@@ -35,7 +35,38 @@ class PermissionController extends Controller
 
         $permission->update($validated);
 
-        return to_route('admin.permissions.index');
+        return to_route('admin.permissions.index')->with('message','Permission updated');
+    }
+
+    public function destroy(Permission $permission){
+        $permission->delete();
+
+        return back()->with('message','Permission deleted');
+    }
+    
+    public function assignRole(Request $request, Permission $permission){
+
+        if ($permission->hasRole($request->role)){// in the form we select a permission
+            return back()->with('message', 'Permission already assigned');
+
+        } 
+        else{
+            $permission->assignRole($request->role);
+            return back()->with('message','Permission assigned');
+        }
+
+
+    }
+
+    public function revokeRole( Permission $permission, Role $role){
+
+        if ($permission->hasRole($role)){// in the form we select a permission
+            $permission->removeRole($role);
+            return back()->with('message', 'Role removed');
+
+        } 
+            return back()->with('message', 'Role not assigned');
+
     }
 
 }
