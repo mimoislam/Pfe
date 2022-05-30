@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\IndexController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\Usercontroller;
 
+use App\Http\Controllers\PlayBookController;
 
 
 
@@ -36,7 +37,7 @@ Route::middleware(['auth', 'role:Admin'])->name('admin.')->prefix('admin')->grou
     Route::resource('/permissions', PermissionController::class);
     Route::post('/permissions/{permission}/roles',[RoleController::class, 'assignRole'])->name('permissions.roles');
     Route::delete('/permissions/{permission}/roles/{role}',[RoleController::class, 'revokeROle'])->name('permissions.roles.revoke');
-    
+
     Route::get('/users',[Usercontroller::class,'index'])->name('users.index');
     Route::get('/users/{user}',[Usercontroller::class,'show'])->name('users.show');
     Route::get('/users/{user}',[Usercontroller::class,'destroy'])->name('users.destroy');
@@ -46,11 +47,12 @@ Route::middleware(['auth', 'role:Admin'])->name('admin.')->prefix('admin')->grou
     Route::get('/users/{user}/permissions/{permission}',[Usercontroller::class,'revokePermission'])->name('users.permissions.revoke');
 
 
+    //// this route is to get all the playBook Exist in our dataBase
+    Route::get('/playbook',[PlayBookController::class,'index']);
 
 
-    
-    
-    
+
+
 });
 /*Route::get('/admin',function(){
     return view('admin.index');
