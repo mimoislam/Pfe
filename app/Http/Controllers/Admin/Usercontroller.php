@@ -59,7 +59,7 @@ class Usercontroller extends Controller
         if ($user->hasRole($request->role)){// in the form we select a user
             return back()->with('message', 'Permission already assigned');
 
-        } 
+        }
         else{
             $user->givePermissionTo($request->role);
             return back()->with('message','Permission assigned');
@@ -74,7 +74,7 @@ class Usercontroller extends Controller
             $user->removeRole($role);
             return back()->with('message', 'Role removed');
 
-        } 
+        }
             return back()->with('message', 'Role not assigned');
 
     }
@@ -87,7 +87,7 @@ class Usercontroller extends Controller
         if ($user->hasPermissionTo($request->permission)){// in the form we select a permission
             return back()->with('message', 'Permission already assigned');
 
-        } 
+        }
         else{
             $user->givePermissionTo($request->permission);
             return back()->with('message','Permission assigned');
@@ -102,12 +102,12 @@ class Usercontroller extends Controller
             $user->revokePermissionTo($permission);
             return back()->with('message', 'Permission revoked');
 
-        } 
+        }
             return back()->with('message', 'Permission not assigned');
 
     }
     //***********************************************Permissions********************************* */
-    
+
     /**
      * Show the form for editing the specified resource.
      *

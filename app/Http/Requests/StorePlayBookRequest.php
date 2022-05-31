@@ -13,7 +13,7 @@ class StorePlayBookRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,10 @@ class StorePlayBookRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name'       => 'required',
+            'system'       => 'required',
+            'githubUrl'       => 'required',
+            'description'       => 'required',
         ];
     }
 }
