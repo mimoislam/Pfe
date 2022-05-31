@@ -48,7 +48,14 @@ Route::middleware(['auth', 'role:Admin'])->name('admin.')->prefix('admin')->grou
 
 
     //// this route is to get all the playBook Exist in our dataBase
-    Route::get('/playbook',[PlayBookController::class,'index']);
+    Route::resource('playbooks', PlayBookController::class);
+//    Route::get('/playbook',[PlayBookController::class,'index']);
+//    Route::get('/playbook/{playBook}',[PlayBookController::class,'show']);
+//    Route::get('/playbook/c',[PlayBookController::class,'create']);
+//
+//    Route::post('/playbook',[PlayBookController::class,'store']);
+
+
 
 
 
