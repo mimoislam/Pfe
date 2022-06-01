@@ -15,6 +15,12 @@ return new class extends Migration
     {
         Schema::create('play_books', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('system');
+            $table->integer('user_id');
+            $table->string('githubUrl');
+            $table->string('description');
+
             $table->timestamps();
         });
     }
