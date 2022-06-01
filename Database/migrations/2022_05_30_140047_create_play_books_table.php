@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('system');
             $table->integer('user_id');
 
+
+
             $table->string('githubUrl');
             $table->string('description');
 
