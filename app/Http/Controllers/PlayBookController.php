@@ -110,7 +110,7 @@ class PlayBookController extends Controller
      * @param  \App\Models\PlayBook  $playBook
      * @return \Illuminate\Http\Response
      */
-    public function update($id)
+    public function update(Request $request,$id)
     {
         // validate
         // read more on validation at http://laravel.com/docs/validation
@@ -120,27 +120,19 @@ class PlayBookController extends Controller
             'githubUrl'       => 'required',
             'description'       => 'required',
         );
-        $validator = Validator::make(Input::all(), $rules);
-
-        // process the login
-        if ($validator->fails()) {
-            return Redirect::to('playbooks/' . $id . '/edit')
-                ->withErrors($validator);
-        } else {
-
+        $request->validate($rules);
             // store
-            $shark = shark::find($id);
-            $shark->name       = Input::get('name');
-            $shark->system      = Input::get('system');
-            $shark->githubUrl      = Input::get('githubUrl');
-            $shark->user_id      = Auth::user()->id;
-            $shark->description = Input::get('description');
+            $shark = PlayBook::find($id);
+            $shark->name       = $request->input('name');
+            $shark->system      = $request->input('system');
+            $shark->githubUrl      = $request->input('githubUrl');
+            $shark->description = $request->input('description');
             $shark->save();
 
             // redirect
             Session::flash('message', 'Successfully updated shark!');
-            return Redirect::to('playbooks');
-        }
+            return Redirect::to('admin/playbooks');
+
     }
     /**
      * Remove the specified resource from storage.

@@ -7,6 +7,8 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\Usercontroller;
 
 use App\Http\Controllers\PlayBookController;
+use App\Http\Controllers\ScanEngController;
+use App\Http\Controllers\ServerController;
 
 
 
@@ -49,6 +51,10 @@ Route::middleware(['auth', 'role:Admin'])->name('admin.')->prefix('admin')->grou
 
     //// this route is to get all the playBook Exist in our dataBase
     Route::resource('playbooks', PlayBookController::class);
+    Route::resource('scanEngs', ScanEngController ::class);
+    Route::resource('servers', ServerController ::class);
+
+
 //    Route::get('/playbook',[PlayBookController::class,'index']);
 //    Route::get('/playbook/{playBook}',[PlayBookController::class,'show']);
 //    Route::get('/playbook/c',[PlayBookController::class,'create']);

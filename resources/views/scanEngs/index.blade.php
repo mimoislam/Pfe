@@ -9,15 +9,15 @@
 
     <nav class="navbar navbar-inverse">
         <div class="navbar-header">
-            <a class="navbar-brand" href="{{ URL::to('admin/playbooks') }}">Playbooks</a>
+            <a class="navbar-brand" href="{{ URL::to('admin/scanEngs') }}">Scan Engines</a>
         </div>
         <ul class="nav navbar-nav">
-            <li><a href="{{ URL::to('admin/playbooks') }}">View All Playbooks</a></li>
-            <li><a href="{{ URL::to('admin/playbooks/create') }}">Create a Playbook</a>
+            <li><a href="{{ URL::to('admin/scanEngs') }}">View All Scan Engines</a></li>
+            <li><a href="{{ URL::to('admin/scanEngs/create') }}">Create a Scan Engines</a>
         </ul>
     </nav>
 
-    <h1>All the sharks</h1>
+    <h1>All the Scan Engines</h1>
 
     <!-- will be used to show any messages -->
     @if (Session::has('message'))
@@ -28,35 +28,30 @@
         <thead>
         <tr>
             <td>ID</td>
-            <td>Name</td>
-            <td>Description</td>
-            <td>System</td>
-            <td>GitHub Url</td>
-            <td>user Who Create this Playbook</td>
+            <td>ip Address</td>
+            <td>Status</td>
+            <td>Port</td>
+
 
         </tr>
         </thead>
         <tbody>
-        @foreach($playbooks as $key => $value)
+        @foreach($scanEngs as $key => $value)
             <tr>
                 <td>{{ $value->id }}</td>
-                <td>{{ $value->name }}</td>
-                <td>{{ $value->description }}</td>
-                <td>{{ $value->system }}</td>
-                <td>{{ $value->githubUrl }}</td>
-                <td>{{ $value->user->name }}</td>
-
+                <td>{{ $value->ipAddress }}</td>
+                <td>{{ $value->status }}</td>
+                <td>{{ $value->port }}</td>
                 <!-- we will also add show, edit, and delete buttons -->
                 <td>
-
                     <!-- delete the shark (uses the destroy method DESTROY /sharks/{id} -->
                     <!-- we will add this later since its a little more complicated than the other two buttons -->
 
                     <!-- show the shark (uses the show method found at GET /sharks/{id} -->
-                    <a class="btn btn-small btn-success" href="{{ URL::to('admin/playbooks/' . $value->id) }}">Show this shark</a>
+                    <a class="btn btn-small btn-success" href="{{ URL::to('admin/scanEngs/' . $value->id) }}">Show this Scan Engine</a>
 
                     <!-- edit this shark (uses the edit method found at GET /sharks/{id}/edit -->
-                    <a class="btn btn-small btn-info" href="{{ URL::to('admin/playbooks/' . $value->id . '/edit') }}">Edit this shark</a>
+                    <a class="btn btn-small btn-info" href="{{ URL::to('admin/scanEngs/' . $value->id . '/edit') }}">Edit this Scan Engine</a>
 
                 </td>
             </tr>
