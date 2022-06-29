@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('audits', function (Blueprint $table) {
+        Schema::create("audits", function (Blueprint $table) {
             $table->id();
             $table->integer('scan_eng_id');
             $table->integer('user_id');
+
             $table->enum('status',\App\Enums\AuditStatus::getValues())->default(\App\Enums\AuditStatus::WORKING);
             $table->text('description');
             $table->timestamps();
