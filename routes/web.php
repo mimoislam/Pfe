@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\Usercontroller;
 use App\Http\Controllers\PlayBookController;
 use App\Http\Controllers\ScanEngController;
 use App\Http\Controllers\ServerController;
+use App\Http\Controllers\AuditController;
 
 
 
@@ -53,6 +54,9 @@ Route::middleware(['auth', 'role:Admin'])->name('admin.')->prefix('admin')->grou
     Route::resource('playbooks', PlayBookController::class);
     Route::resource('scanEngs', ScanEngController ::class);
     Route::resource('servers', ServerController ::class);
+    Route::resource('audit', AuditController ::class);
+    Route::post('/audit/{id}/auditseccess', [AuditController ::class,'successAudit']);
+
 
 
 //    Route::get('/playbook',[PlayBookController::class,'index']);
