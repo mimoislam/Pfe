@@ -3,6 +3,9 @@
 <head>
     <title>PlayBooks</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="../css/app.css">
+
 </head>
 <body>
 <div class="container">
@@ -32,6 +35,7 @@
             <td>Audited</td>
             <td>System</td>
             <td>Status</td>
+            <td>credentials</td>
 
 
         </tr>
@@ -44,6 +48,29 @@
                 <td>{{ $value->audited }}</td>
                 <td>{{ $value->system }}</td>
                 <td>{{ $value->status }}</td>
+                <td>
+                @if(count($value->credentials) >= 1)
+
+                
+                    @php
+                        $i=1
+                    @endphp
+                  
+                 @foreach( $value->credentials as $credential)
+                 
+                        user  {{$i++}}
+                        <hr>{{ $credential->username}} <br>
+                        {{ $credential->password}}<br>
+                        <hr>
+                        
+                    @endforeach
+                
+                @else
+                       <span class="icon">Hello</span>
+                        
+                        
+                @endif
+            </td>
                 <!-- we will also add show, edit, and delete buttons -->
                 <td>
                     <!-- delete the shark (uses the destroy method DESTROY /sharks/{id} -->
@@ -62,7 +89,11 @@
     </table>
 
 </div>
+
+
+
 </body>
+
 </html>
 
 

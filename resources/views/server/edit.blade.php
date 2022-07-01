@@ -43,9 +43,59 @@
     {{--        {{ Form::select('shark_level', array('0' => 'Select a Level', '1' => 'Sees Sunlight', '2' => 'Foosball Fanatic', '3' => 'Basement Dweller'), Input::old('shark_level'), array('class' => 'form-control')) }}--}}
     {{--    </div>--}}
 
-    {{ Form::submit('Create the Server', array('class' => 'btn btn-primary')) }}
+    {{ Form::submit('Edit the Server', array('class' => 'btn btn-primary')) }}
 
     {{ Form::close() }}
+
+    <div>
+       
+        <h1>Users</h1><a class="btn btn-small btn-info"  href="{{ URL::to('admin/credentials/create/'.$server->id) }}">Add</a>
+  
+        @if(count($server->credentials) >= 1)
+            
+        <table class=" table  table-bordered">
+            <tr>
+                <td>Username</td>
+                <td>Password</td>
+                <td>Actions</td>
+
+            </tr>
+            @foreach( $server->credentials as $credential)
+
+            <tr>
+                    <td>{{ $credential->username}}  </td>
+                  
+                    <td>{{ $credential->password}}</td>
+                  <td> 
+                      
+                    <a class="btn btn-small btn-success" href="{{ URL::to('admin/credentials/'.$credential->id.'/edit') }}">Update</a>
+                    
+                    <form  action="/admin/credentials/{{$credential->id}}" method="POST">
+                        @csrf
+                        @method('delete')
+                        <button type="submit" class="btn btn-danger"> Remove</button>
+                        
+                      </form> 
+                    
+                    
+                    </td>
+            </tr>     
+                    
+                @endforeach
+
+            
+        </table>
+            
+    <h5>Total of users:  {{count($server->credentials)}}</h5>
+    @else
+            no Users <br>
+            
+            
+    @endif
+
+
+    </div>
+
 
 </div>
 </body>

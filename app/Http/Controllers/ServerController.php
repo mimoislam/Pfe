@@ -81,6 +81,7 @@ class ServerController extends Controller
     public function edit($id)
     {
         $server= Server::find($id);
+        
         // show the edit form and pass the shark
         return View::make('server.edit')
             ->with('server', $server);

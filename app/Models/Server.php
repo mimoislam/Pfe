@@ -17,4 +17,11 @@ class Server extends Model
             ->withTimestamps()
             ->using(AuditServer::class);;
     }
+
+
+    public function  credentials(){
+        return $this->hasMany(Credential::class);   
+        
+    }
+   
 }

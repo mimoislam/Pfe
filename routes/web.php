@@ -10,6 +10,7 @@ use App\Http\Controllers\PlayBookController;
 use App\Http\Controllers\ScanEngController;
 use App\Http\Controllers\ServerController;
 use App\Http\Controllers\AuditController;
+use App\Http\Controllers\CredentialController;
 
 
 
@@ -32,7 +33,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::middleware(['auth', 'role:Admin'])->name('admin.')->prefix('admin')->group(function () {
+Route::name('admin.')->prefix('admin')->group(function () {
     Route::get('/',[IndexController::class, 'index'])->name('index');
     Route::resource('/roles', RoleController::class);
     Route::post('/roles/{role}/permissions',[RoleController::class, 'givePermission'])->name('roles.permissions');
@@ -54,6 +55,8 @@ Route::middleware(['auth', 'role:Admin'])->name('admin.')->prefix('admin')->grou
     Route::resource('playbooks', PlayBookController::class);
     Route::resource('scanEngs', ScanEngController ::class);
     Route::resource('servers', ServerController ::class);
+    Route::resource('credentials', CredentialController ::class);
+    Route::get('credentials/create/{id}', [CredentialController::class,'create']);
     Route::resource('audit', AuditController ::class);
     Route::post('/audit/{id}/auditseccess', [AuditController ::class,'successAudit']);
 
