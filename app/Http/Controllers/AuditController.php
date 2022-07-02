@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use App\Enums\AuditStatus;
 use App\Enums\ScanEngStatus;
 use App\Enums\ServerStatus;
+use App\Enums\ResultStatus;
+use App\Enums\AuditServerStatus;
 use App\Models\Audit;
 use App\Models\AuditServer;
 use App\Models\File;
 use App\Models\PlayBook;
 use App\Models\ScanEng;
 use App\Models\Server;
+use App\Models\Result;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -77,16 +80,7 @@ class AuditController extends Controller
 
         foreach ($servers as $server)
         {
-            $serverObject = Server::find($server);
-//            if($serverObject->status==ServerStatus::WORKING){
-//                // add the error message
-//                return Redirect::to('admin/audit');
-//            }else{
-
-
-
-
-
+                $serverObject = Server::find($server);
                 $serverObject->status=ServerStatus::WORKING;
                 $serverObject->save();
 
@@ -99,8 +93,7 @@ class AuditController extends Controller
                 $auditServer->server_id=$serverObject->id;
                 $auditServer->playbook_id=$playbook->id;
                 $auditServer->save();
-                //// add http request
-//            }
+
 
         }
         return Redirect::to('admin/audit');
@@ -121,24 +114,63 @@ class AuditController extends Controller
         ///  third save  the result  part
         ///  lastly change the scan Eng and server  styatus and audit if he finished all the other auditServer  check by list ip address
         $audit= Audit::find($id);
+        $list_of_ids=array();
+        foreach ($audit->auditServers as $key => $value) {
+            if($request->playbook_id==$value->playbook_id){
+                array_push($list_of_ids,
+                ["id"=>$value->id,"ipAddress"=>$value->ipAddress]);
+                $value->status=AuditServerStatus::FINISHED;
+                $value->save();
+    }
+  
+        }
+         //$request->data[0]['changed'];
+         foreach ($request->data as $key => $value) {
+            $id_audit_server=$this->checkIfExist('213.12.199.1',$list_of_ids);
+            if( $id_audit_server !=-1)
+            { 
+               $result= new Result;
+               if( $value['changed']==TRUE)
+               {       
+                   $result->status=ResultStatus::CONFORM_BY_SYSTEM;
+               }        
+               elseif ($request->data[0]['failed']==TRUE) {
+                   $result->status=ResultStatus::FAILED_BY_SYSTEM;
+               }
+               $result->result= $value['stdout'];
+               $result->module=!empty($$request->data[0]['stderr']) ? $value['stderr'] : "";
+               $result->audit_server_id=$id_audit_server;
+
+               $result->save();
+           }        
+         }
+
+
+     
 //        $this->validate($request, [
 //            'file' => 'required',
 //            'file.*' => 'mimes:json'
 //        ]);
-        $imageName = time().'.'.$request->file->extension();
+        // $imageName = time().'.'.$request->file->extension();
 
-        $request->file->move(public_path('file/'.$audit->id), $imageName);
+        // $request->file->move(public_path('file/'.$audit->id), $imageName);
 
-        $file= new File;
-        $file->path=$imageName;
+        // $file= new File;
+        // $file->path=$imageName;
 
-        $file->audit_id=$audit->id;
-        $file->save();
-        $students = json_decode(file_get_contents(public_path('file/'.$audit->id.'/'. $imageName) ), true);
-        return  $students;
+        // $file->audit_id=$audit->id;
+        // $file->save();
 
-        return $audit;
+        return response()->json(['success' => 'success'], 200);
+
     }
 
+    public function checkIfExist($host,$list){
+        foreach ($list as $key => $value) {
+            if($value['ipAddress']==$host)
+            return $value['id'];
+        }
+        return -1;
 
+    }
 }

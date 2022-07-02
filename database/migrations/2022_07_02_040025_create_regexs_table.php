@@ -13,12 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('results', function (Blueprint $table) {
+        Schema::create('regexs', function (Blueprint $table) {
             $table->id();
-            $table->enum('status',\App\Enums\ResultStatus::getValues());
-            $table->text('error')->nullable();
-            $table->text('result');
-            $table->integer('audit_server_id');
             $table->timestamps();
         });
     }
@@ -30,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('results');
+        Schema::dropIfExists('regexs');
     }
 };

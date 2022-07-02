@@ -11,6 +11,7 @@ use App\Http\Controllers\ScanEngController;
 use App\Http\Controllers\ServerController;
 use App\Http\Controllers\AuditController;
 use App\Http\Controllers\CredentialController;
+use App\Http\Controllers\AuditServerController;
 
 
 
@@ -58,7 +59,8 @@ Route::name('admin.')->prefix('admin')->group(function () {
     Route::resource('credentials', CredentialController ::class);
     Route::get('credentials/create/{id}', [CredentialController::class,'create']);
     Route::resource('audit', AuditController ::class);
-    Route::post('/audit/{id}/auditseccess', [AuditController ::class,'successAudit']);
+    Route::get('/audit/{id}/auditseccess', [AuditController ::class,'successAudit']);
+    Route::get('/auditserver/{id}', [AuditServerController ::class,'show']);
 
 
 

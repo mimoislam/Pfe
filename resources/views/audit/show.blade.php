@@ -27,7 +27,9 @@
                 <thead class="thead-dark">
                 <tr>
 
+                    <td>Id Of Audit Server</td>
                     <td>Server Ip Address</td>
+
                     <td>Status of audit (Working = notFinished)</td>
                     <td>Playbook Executed</td>
 
@@ -35,20 +37,25 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($audit->servers as $key => $value)
+                @foreach($audit->auditServers as $key => $value)
 
                     <tr>
                         <td>
                             <a class= "btn btn-dark" style="margin-bottom: 10px" href="{{ URL::to('admin/servers/' . $value->id) }}">
-                                {{$value->ipAddress}}
+                                {{$value->id}}
                             </a>
+                        </td>
+                        <td>
+
+                                {{$value->ipAddress}}
+
                         </td>
                         <td>
                                 {{$value->status}}
                         </td>
                         <td>
                             <a class= "btn btn-dark" style="margin-bottom: 10px" href="{{ URL::to('admin/playbooks/' . $value->playbook_id) }}">
-                                {{$value->id}}
+                                {{$value->playbook_id}}
                             </a>
                         </td>
                     </tr>

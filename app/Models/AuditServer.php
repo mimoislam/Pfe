@@ -13,5 +13,11 @@ class AuditServer extends Pivot
         return $this->belongsTo(PlayBook::class);
     }
 
+    public function audit(){
+        return $this->belongsTo(Audit::class,'audit_id');
+    }
+    public function results(){
+        return $this->hasMany(Result::class,'audit_server_id');
+    }
 
 }

@@ -15,7 +15,7 @@ class Credential extends Model
         'server_id'
     ];
 
-    public function Server()
+    public function server()
   {
       return $this->belongsTo(Server::class,);
   }

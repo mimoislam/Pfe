@@ -11,6 +11,9 @@ use BenSampo\Enum\Enum;
  */
 final class ResultStatus extends Enum
 {
-    const FAILED =   'failed';
-    const SUCCESS =   'success';
+    const FAILED =  0;
+    const CONFORM =   1;
+    const FAILED_BY_SYSTEM = 2;
+    const CONFORM_BY_SYSTEM =   3;   
+
 }
