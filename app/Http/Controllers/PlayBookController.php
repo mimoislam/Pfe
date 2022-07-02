@@ -37,7 +37,7 @@ class PlayBookController extends Controller
     public function create()
     {
 
-        return View::make('playbook.create');
+        return View::make('playBook.create');
 
     }
 
