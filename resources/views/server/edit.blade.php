@@ -50,8 +50,16 @@
     
 
     <div>
+
+        <div class="row">
+            <div class="col-md-8"> <h1 class="">Users</h1></div>
+            <div class="col-md-4">                    <a class="btn btn-small btn-info"  href="{{ URL::to('admin/credentials/create/'.$server->id) }}">Add</a>
+            </div>
+          </div>
+          
+       
         
-            <h1 class="mt-4">Users</h1>
+       
             <hr>
         @if(count($server->credentials) >= 1)
 
@@ -89,7 +97,7 @@
             </tr>     
                     
                 @endforeach
-            <tr><td></td><td><a class="btn btn-small btn-info"  href="{{ URL::to('admin/credentials/create/'.$server->id) }}">Add</a></td></tr>
+            
             </tbody>
         </table>
       </div>

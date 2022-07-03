@@ -11,7 +11,7 @@
 <div class="wrapper">
     <div class="content-wrapper p-5">
 
-    <h1>Create a Servers </h1>
+    <h1>Create a Server</h1>
 
     <!-- if there are creation errors, they will show here -->
     {{ Html::ul($errors->all()) }}

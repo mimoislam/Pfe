@@ -1,24 +1,14 @@
+@include('layouts.sidebar')
+@include('layouts.navbars.navbarscanengine')
+@extends('layouts.app')
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Shark App</title>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-</head>
-<body>
-<div class="container">
 
-    <nav class="navbar navbar-inverse">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="{{ URL::to('admin/scanEngs') }}">Scan Engines</a>
-        </div>
-        <ul class="nav navbar-nav">
-            <li><a href="{{ URL::to('admin/scanEngs') }}">View All Scan Engines</a></li>
-            <li><a href="{{ URL::to('admin/scanEngs/create') }}">Create a Scan Engines</a>
-        </ul>
-    </nav>
+@section('content')
 
-    <h1>Create a shark</h1>
+
+<div class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+    <div class="content-wrapper p-5">    <h1>Create a Scan Engine</h1>
 
     <!-- if there are creation errors, they will show here -->
     {{ Html::ul($errors->all()) }}
@@ -49,8 +39,11 @@
     {{ Form::close() }}
 
 </div>
-</body>
-</html>
+
+
+
+</div>
+</div>
 
 {{--<x-guest-layout>--}}
 {{--    <x-auth-card>--}}

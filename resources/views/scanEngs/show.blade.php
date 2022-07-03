@@ -1,22 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Shark App</title>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-</head>
-<body>
-<div class="container">
+@include('layouts.sidebar')
+@include('layouts.navbars.navbarscanengine')
+@extends('layouts.app')
 
-    <nav class="navbar navbar-inverse">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="{{ URL::to('admin/scanEngs') }}">Scan Engines</a>
-        </div>
-        <ul class="nav navbar-nav">
-            <li><a href="{{ URL::to('admin/scanEngs') }}">View All Scan Engines</a></li>
-            <li><a href="{{ URL::to('admin/scanEngs/create') }}">Create a Scan Engines</a>
-        </ul>
-    </nav>
 
+@section('content')
+
+<div class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+        <div class="content-wrapper p-5">
+    
     <h1>Showing Scan Engine  {{ $scanEng->id }}</h1>
 
     <div class="jumbotron text-center">
@@ -28,5 +20,8 @@
     </div>
 
 </div>
-</body>
-</html>
+</div>
+
+
+
+</div>

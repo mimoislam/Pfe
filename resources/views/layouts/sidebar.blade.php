@@ -55,14 +55,14 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ route('admin.servers.index') }}" class= "user-panel  nav-link">
+                <a href="{{ route('admin.scanEngs.index') }}" class= "user-panel  nav-link">
                 
                   <p>Dashboard</p>
  
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('admin.servers.create') }}" class =" user-panel  nav-link ">
+                <a href="{{ route('admin.scanEngs.create') }}" class =" user-panel  nav-link ">
                 
                   <p>Ajouter</p>
                 </a>
