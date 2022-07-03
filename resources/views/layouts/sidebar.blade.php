@@ -5,7 +5,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="dist/img/elit.jpg" class="img-circle " alt="User Image">
+          <img src="{{ asset ("dist/img/elit.jpg")}}" class="img-circle " alt="User Image">
         </div>
         
 
@@ -31,15 +31,15 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ route('admin.servers.index') }}" class="nav-link">
-                    <i class="nav-icon far fa-circle text-info"></i>
+                <a href="{{ route('admin.servers.index') }}" class= "user-panel nav-link">
+                
                   <p>Dashboard</p>
  
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('admin.servers.create') }}" class="nav-link ">
-                    <i class="nav-icon far fa-circle text-info"></i>
+                <a href="{{ route('admin.servers.create') }}" class ="user-panel  nav-link ">
+                
                   <p>Ajouter</p>
                 </a>
               </li>
@@ -56,15 +56,15 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ route('admin.servers.index') }}" class="nav-link">
-                    <i class="nav-icon far fa-circle text-info"></i>
+                <a href="{{ route('admin.servers.index') }}" class= "user-panel  nav-link">
+                
                   <p>Dashboard</p>
  
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('admin.servers.create') }}" class="nav-link ">
-                    <i class="nav-icon far fa-circle text-info"></i>
+                <a href="{{ route('admin.servers.create') }}" class =" user-panel  nav-link ">
+                
                   <p>Ajouter</p>
                 </a>
               </li>
@@ -83,14 +83,14 @@
             </a>
             <ul class="nav nav-treeview">
                 <li class="nav-item">
-                    <a href="pages/layout/top-nav.html" class="nav-link">
-                        <i class="nav-icon far fa-circle text-info"></i>
+                    <a href="pages/layout/top-nav.html" class="user-panel  nav-link ">
+                    
                       <p>Dashboard</p>
                     </a>
                   </li>
               <li class="nav-item">
-                <a href="pages/layout/top-nav.html" class="nav-link">
-                    <i class="nav-icon far fa-circle text-info"></i>
+                <a href="pages/layout/top-nav.html" class="user-panel  nav-link ">
+                
                   <p>Ajouter</p>
                 </a>
               </li>
@@ -110,14 +110,14 @@
             </a>
             <ul class="nav nav-treeview">
                 <li class="nav-item">
-                    <a href="pages/layout/top-nav.html" class="nav-link">
-                        <i class="nav-icon far fa-circle text-info"></i>
+                    <a href="{{route('admin.playbooks.index')}}" class="user-panel nav-link ">
+                    
                       <p>Dashboard</p>
                     </a>
                   </li>
               <li class="nav-item">
-                <a href="pages/layout/top-nav.html" class="nav-link">
-                    <i class="nav-icon far fa-circle text-info"></i>
+                <a href="pages/layout/top-nav.html" class="user-panel nav-link ">
+                
                   <p>Ajouter</p>
                 </a>
               </li>

@@ -1,43 +1,36 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>PlayBooks</title>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-</head>
-<body>
-<div class="container">
+@include('layouts.sidebar')
+@include('layouts.topnavbar')
+@extends('layouts.app')
 
-    <nav class="navbar navbar-inverse">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="{{ URL::to('admin/playbooks') }}">Playbooks</a>
-        </div>
-        <ul class="nav navbar-nav">
-            <li><a href="{{ URL::to('admin/playbooks') }}">View All Playbooks</a></li>
-            <li><a href="{{ URL::to('admin/playbooks/create') }}">Create a Playbook</a>
-        </ul>
-    </nav>
 
-    <h1>All the sharks</h1>
+@section('content')
+<div class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+
+  <div class="content-wrapper">
+
+    <h1 class="m-3">Playbooks Dashboard</h1>
 
     <!-- will be used to show any messages -->
     @if (Session::has('message'))
         <div class="alert alert-info">{{ Session::get('message') }}</div>
     @endif
 
-    <table class="table table-striped table-bordered">
-        <thead>
-        <tr>
-            <td>ID</td>
-            <td>Name</td>
-            <td>Description</td>
-            <td>System</td>
-            <td>GitHub Url</td>
-            <td>user Who Create this Playbook</td>
-
-        </tr>
-        </thead>
-        <tbody>
-        @foreach($playbooks as $key => $value)
+    <!-- /.card-header -->
+    <div class="card-body p-0 ml-3 mr-5">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>System</th>
+                <th>GitHub Url</th>
+                <th>Creator</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach($playbooks as $key => $value)
             <tr>
                 <td>{{ $value->id }}</td>
                 <td>{{ $value->name }}</td>
@@ -61,13 +54,15 @@
                 </td>
             </tr>
         @endforeach
-        </tbody>
-    </table>
+          </tbody>
+        </table>
+      </div>
+      <!-- /.card-body -->
+  </div>
+</div>
+<!-- ./wrapper -->
+
+
 
 </div>
-</body>
-</html>
-
-
-
 
