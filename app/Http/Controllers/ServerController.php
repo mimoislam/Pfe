@@ -107,8 +107,8 @@ class ServerController extends Controller
             $server->system = $request->input('system');
             $server->save();
             // redirect
-            Session::flash('message', 'Successfully updated Server !');
-            return Redirect::to('admin/servers');
+       
+            return back()->with('message', 'Server Successfully Updated!');
         }
 
 
@@ -122,6 +122,10 @@ class ServerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $cred = Server::find($id);
+        
+        $cred->delete();            
+            Session::flash('message', 'Server Successfully deleted!');
+            return Redirect::to('admin/servers');
     }
 }

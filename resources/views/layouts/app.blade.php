@@ -38,9 +38,7 @@
   <title>{{ config('app.name', 'Elit Hardening') }}</title>
     </head>
     <body class="font-sans antialiased">
-        <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="{{ asset ("dist/img/logo_SDC.png")}}" alt="AdminLTELogo" height="100" width="100">
-          </div>    
+        
         <div id="app">
             <main >
                

@@ -1,12 +1,11 @@
 
-@include('layouts.sidebar')
-@include('layouts.navbars.navbarplaybooks')
 @extends('layouts.app')
 
 
 @section('content')
 
-
+@include('layouts.navbars.navbarplaybooks')
+@include('layouts.sidebar')
 <div class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
     <div class="content-wrapper p-5">

@@ -1,8 +1,13 @@
-@include('layouts.sidebar')
-@include('layouts.topnavbar')
+
 
 @extends('layouts.app')
 @section('content')
+
+@include('layouts.topnavbar')
+@include('layouts.sidebar')
+<div class="preloader flex-column justify-content-center align-items-center">
+  <img class="animation__shake" src="{{ asset ("dist/img/logo_SDC.png")}}" alt="AdminLTELogo" height="100" width="100">
+</div>    
 <div class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
