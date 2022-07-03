@@ -28,13 +28,13 @@ use App\Http\Controllers\AuditServerController;
 
 Route::get('/', function () {
     return view('welcome');
-})->name('home');
+})->middleware(['auth'])->name('home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::name('admin.')->prefix('admin')->group(function () {
+Route::middleware(['auth'])->name('admin.')->prefix('admin')->group(function () {
     Route::get('/',[IndexController::class, 'index'])->name('index');
     Route::resource('/roles', RoleController::class);
     Route::post('/roles/{role}/permissions',[RoleController::class, 'givePermission'])->name('roles.permissions');

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 use View;
 class PlayBookController extends Controller
 {
@@ -65,7 +66,7 @@ class PlayBookController extends Controller
             $shark->save();
 
             // redirect
-            Session::flash('message', 'Successfully created shark!');
+            Session::flash('message', 'Playbook Successfully created!');
             return Redirect::to('admin/playbooks');
 
     }
@@ -83,7 +84,7 @@ class PlayBookController extends Controller
         $playbook= PlayBook::find($id);
 
         // show the view and pass the shark to it
-        return View::make('playbook.show')
+        return View::make('playBook.show')
             ->with('playbook', $playbook);
     }
 
@@ -95,10 +96,10 @@ class PlayBookController extends Controller
      */
     public function edit($id)
     {
-        $playbook= Playbook::find($id);
+        $playbook= PlayBook::find($id);
 
         // show the edit form and pass the shark
-        return View::make('playbook.edit')
+        return View::make('playBook.edit')
             ->with('playbook', $playbook);
 
     }
@@ -112,6 +113,7 @@ class PlayBookController extends Controller
      */
     public function update(Request $request,$id)
     {
+      
         // validate
         // read more on validation at http://laravel.com/docs/validation
         $rules = array(
@@ -140,8 +142,12 @@ class PlayBookController extends Controller
      * @param  \App\Models\PlayBook  $playBook
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PlayBook $playBook)
+    public function destroy( $id)
     {
-        //
+       $cred = PlayBook::find($id);
+        
+        $cred->delete();            
+            Session::flash('message', 'playbook Successfully deleted!');
+            return Redirect::to('admin/playbooks');
     }
 }
