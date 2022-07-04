@@ -14,4 +14,8 @@ class PlayBook extends Model
   {
       return $this->belongsTo(User::class, );
   }
+  public function regexs()
+  {
+      return $this->hasMany(Regex::class,'playbook_id' );
+  }
 }

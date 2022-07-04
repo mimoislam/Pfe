@@ -102,7 +102,6 @@ class AuditController extends Controller
     {
         // get the shark
         $audit= Audit::find($id);
-
         // show the view and pass the shark to it
         return View::make('audit.show')
             ->with('audit', $audit);
@@ -115,30 +114,50 @@ class AuditController extends Controller
         ///  lastly change the scan Eng and server  styatus and audit if he finished all the other auditServer  check by list ip address
         $audit= Audit::find($id);
         $list_of_ids=array();
+
         foreach ($audit->auditServers as $key => $value) {
             if($request->playbook_id==$value->playbook_id){
                 array_push($list_of_ids,
                 ["id"=>$value->id,"ipAddress"=>$value->ipAddress]);
                 $value->status=AuditServerStatus::FINISHED;
                 $value->save();
-    }
-  
+            }
         }
-         //$request->data[0]['changed'];
+
+        $regexs=Playbook::find($value->playbook_id)->regexs;
+        $expretions=$regexs[0]->expretions;
+        $sizeRegexExpretions=sizeof($expretions);
+
          foreach ($request->data as $key => $value) {
             $id_audit_server=$this->checkIfExist('213.12.199.1',$list_of_ids);
             if( $id_audit_server !=-1)
-            { 
+            {   
                $result= new Result;
                if( $value['changed']==TRUE)
                {       
-                   $result->status=ResultStatus::CONFORM_BY_SYSTEM;
+                   if($key<$sizeRegexExpretions){
+                    preg_match('/'.$expretions[$key]->expretion.'/m', $value['stdout'], $matches);
+                    $size= sizeof($matches);
+                    if($size!=0){
+                        $result->status=ResultStatus::CONFORM_BY_SYSTEM;
+
+                    }else  {
+                        $result->status=ResultStatus::FAILED_BY_REGEX;
+
+                    }
+
+                   }else{
+                    $result->status=ResultStatus::OUT_OF_REGEX;
+                   }
                }        
-               elseif ($request->data[0]['failed']==TRUE) {
+               else
+               if ($request->data[0]['failed']==TRUE) {
+                return  ResultStatus::CONFORM_BY_SYSTEM;
+
                    $result->status=ResultStatus::FAILED_BY_SYSTEM;
                }
                $result->result= $value['stdout'];
-               $result->module=!empty($$request->data[0]['stderr']) ? $value['stderr'] : "";
+               $result->error=!empty($$request->data[0]['stderr']) ? $value['stderr'] : "";
                $result->audit_server_id=$id_audit_server;
 
                $result->save();

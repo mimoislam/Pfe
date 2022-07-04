@@ -13,6 +13,7 @@ use App\Http\Controllers\AuditController;
 use App\Http\Controllers\CredentialController;
 use App\Http\Controllers\AuditServerController;
 
+use App\Http\Controllers\RegexController;
 
 
 /*
@@ -61,6 +62,7 @@ Route::name('admin.')->prefix('admin')->group(function () {
     Route::resource('audit', AuditController ::class);
     Route::get('/audit/{id}/auditseccess', [AuditController ::class,'successAudit']);
     Route::get('/auditserver/{id}', [AuditServerController ::class,'show']);
+    Route::resource('regex', RegexController::class);
 
 
 

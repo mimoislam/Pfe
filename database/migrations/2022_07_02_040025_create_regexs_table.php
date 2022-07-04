@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('regexs', function (Blueprint $table) {
             $table->id();
+            $table->integer('playbook_id');
+
             $table->timestamps();
         });
     }

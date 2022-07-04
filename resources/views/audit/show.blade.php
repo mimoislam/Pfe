@@ -1,11 +1,15 @@
+@include('layouts.sidebar')
+@include('layouts.topnavbar')
+@extends('layouts.app')
 
-<x-app-layout>
 
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Audits') }}
-        </h2>
-    </x-slot>
+@section('content')
+<div class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+    
+      <div class="content-wrapper">
+    
+        <h1 class="m-3">Audit Dashboard</h1>
     <div class="py-12 bg-white overflow-hidden shadow-sm sm:rounded-lg">
 
         <!-- will be used to show any messages -->
@@ -51,7 +55,7 @@
 
                         </td>
                         <td>
-                                {{$value->status}}
+                                {{$value->status-1}}
                         </td>
                         <td>
                             <a class= "btn btn-dark" style="margin-bottom: 10px" href="{{ URL::to('admin/playbooks/' . $value->playbook_id) }}">
@@ -68,8 +72,14 @@
         </p>
         </div>
     </div>
-</x-app-layout>
 
+</div>
+</div>
+<!-- ./wrapper -->
+
+
+
+</div>
 
 
 

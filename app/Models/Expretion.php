@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Expretion extends Model
 {
     use HasFactory;
+    public function regex()
+  {
+      return $this->belongsTo(Regex::class,);
+  }
+
+
+    
 }

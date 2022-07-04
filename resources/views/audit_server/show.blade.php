@@ -1,9 +1,15 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Audit Servers') }}
-        </h2>
-    </x-slot>
+@include('layouts.sidebar')
+@include('layouts.topnavbar')
+@extends('layouts.app')
+
+
+@section('content')
+<div class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+    
+      <div class="content-wrapper">
+    
+        <h1 class="m-3">Audit Server Dashboard</h1>
     <div class="py-12 bg-white overflow-hidden shadow-sm sm:rounded-lg">
 
         <!-- will be used to show any messages -->
@@ -69,4 +75,10 @@
         </p>
         </div>
     </div>
-</x-app-layout>
+</div>
+</div>
+<!-- ./wrapper -->
+
+
+
+</div>
