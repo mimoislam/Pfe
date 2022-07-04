@@ -45,7 +45,7 @@
 
                     <tr>
                         <td>
-                            <a class= "btn btn-dark" style="margin-bottom: 10px" href="{{ URL::to('admin/servers/' . $value->id) }}">
+                            <a class= "btn btn-dark" style="margin-bottom: 10px" href="{{ URL::to('admin/auditserver/' . $value->id) }}">
                                 {{$value->id}}
                             </a>
                         </td>
@@ -55,7 +55,7 @@
 
                         </td>
                         <td>
-                                {{$value->status-1}}
+                                {{$value->status}}
                         </td>
                         <td>
                             <a class= "btn btn-dark" style="margin-bottom: 10px" href="{{ URL::to('admin/playbooks/' . $value->playbook_id) }}">

@@ -29,13 +29,13 @@ use App\Http\Controllers\RegexController;
 
 Route::get('/', function () {
     return view('welcome');
-})->middleware(['auth'])->name('home');
+})->name('home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::middleware(['auth', 'role:admin'])->name('admin.')->prefix('admin')->group(function () {
+Route::name('admin.')->prefix('admin')->group(function () {
     Route::get('/',[IndexController::class, 'index'])->name('index');
     Route::resource('/roles', RoleController::class);
     Route::post('/roles/{role}/permissions',[RoleController::class, 'givePermission'])->name('roles.permissions');
@@ -63,6 +63,8 @@ Route::middleware(['auth', 'role:admin'])->name('admin.')->prefix('admin')->grou
     Route::get('/audit/{id}/auditseccess', [AuditController ::class,'successAudit']);
     Route::get('/auditserver/{id}', [AuditServerController ::class,'show']);
     Route::resource('regex', RegexController::class);
+    Route::get('/auditserver/{id}/manual', [AuditServerController ::class,'manual']);
+    Route::post('/auditserver/{id}/manual', [AuditServerController ::class,'manualstore']);
 
 
 

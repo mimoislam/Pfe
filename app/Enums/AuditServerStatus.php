@@ -13,4 +13,6 @@ final class AuditServerStatus extends Enum
 {
     const WORKING =   'working';
     const FINISHED =   'finished';
+    const AUDITED =   'audited';
+
 }

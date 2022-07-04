@@ -1,11 +1,15 @@
+@include('layouts.sidebar')
+@include('layouts.topnavbar')
+@extends('layouts.app')
 
-    <x-app-layout>
 
-        <x-slot name="header">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Audits') }}
-            </h2>
-        </x-slot>
+@section('content')
+<div class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+    
+      <div class="content-wrapper">
+    
+        <h1 class="m-3">Audit Dashboard</h1>
         <div class="py-12 bg-white overflow-hidden shadow-sm sm:rounded-lg">
 
     <!-- will be used to show any messages -->
@@ -53,26 +57,7 @@
                     <!-- we will add this later since its a little more complicated than the other two buttons -->
 
                     <!-- show the shark (uses the show method found at GET /sharks/{id} -->
-{{--                    <a class="btn btn-small btn-success" href="{{ URL::to('admin/audit/' . $value->id) }}">Show this Audit</a>--}}
-                    {{ Form::open(array('url' => 'admin/audit/' . $value->id.'/auditseccess', 'method' => 'post','files'=>'true')) }}
 
-
-
-                    <div class="form-group">
-                        {{ Form::label('file', 'File') }}
-                        {{ Form::file('file', Input::old('file'), array('class' => 'form-control')) }}
-                    </div>
-
-
-
-                    {{--    <div class="form-group">--}}
-                    {{--        {{ Form::label('shark_level', 'shark Level') }}--}}
-                    {{--        {{ Form::select('shark_level', array('0' => 'Select a Level', '1' => 'Sees Sunlight', '2' => 'Foosball Fanatic', '3' => 'Basement Dweller'), Input::old('shark_level'), array('class' => 'form-control')) }}--}}
-                    {{--    </div>--}}
-
-                    {{ Form::submit('create success audit', array('class' => 'btn btn-primary')) }}
-
-                    {{ Form::close() }}
                     <!-- edit this shark (uses the edit method found at GET /sharks/{id}/edit -->
 
                     @if( $value->status!=\App\Enums\AuditStatus::WORKING)
@@ -84,7 +69,13 @@
         </tbody>
     </table>
         </div>
-    </x-app-layout>
+    </div>
+</div>
+<!-- ./wrapper -->
+
+
+
+</div>
 
 
 

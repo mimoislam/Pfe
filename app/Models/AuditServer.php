@@ -20,4 +20,5 @@ class AuditServer extends Pivot
         return $this->hasMany(Result::class,'audit_server_id');
     }
 
+
 }
