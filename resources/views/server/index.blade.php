@@ -1,26 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>PlayBooks</title>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
 
-    <link rel="stylesheet" href="../css/app.css">
+@extends('layouts.app')
 
-</head>
-<body>
-<div class="container">
 
-    <nav class="navbar navbar-inverse">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="{{ URL::to('admin/servers') }}">Servers</a>
-        </div>
-        <ul class="nav navbar-nav">
-            <li><a href="{{ URL::to('admin/servers') }}">View All Servers</a></li>
-            <li><a href="{{ URL::to('admin/servers/create') }}">Create a Servers</a>
-        </ul>
-    </nav>
+@section('content')
+@include('layouts.sidebar')
+@include('layouts.navbars.navbarserver')
+<div class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
 
-    <h1>All the Servers </h1>
+  <div class="content-wrapper p-5">
+
+
+    <h1>The Servers</h1>
 
     <!-- will be used to show any messages -->
     @if (Session::has('message'))
@@ -28,43 +19,40 @@
     @endif
 
 
-    <div class="card">
-        <div class="card-header border-0">
-          <h3 class="card-title">Products</h3>
-          <div class="card-tools">
-            <a href="#" class="btn btn-tool btn-sm">
-              <i class="fas fa-download"></i>
-            </a>
-            <a href="#" class="btn btn-tool btn-sm">
-              <i class="fas fa-bars"></i>
-            </a>
-          </div>
-        </div>
-
-
-        <div class="card-body table-responsive p-0">
-          <table class="table table-striped table-valign-middle">
-            
-                <thead>
-                <tr>
-                    <td>ID</td>
-                    <td>ip Address</td>
-                    <td>Audited</td>
-                    <td>System</td>
-                    <td>Status</td>
-                    <td>credentials</td>
-        
+    <div class="card-body p-0">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+                    <th>ID</th>
+                    <th>ip Address</th>
+                    <th>Audited</th>
+                    <th>System</th>
+                    <th>Status</th>
+                    <th>Users</th>
         
                 </tr>
-                </thead>
-                <tbody>
+            </thead>
+            <tbody>
                 @foreach($servers as $key => $value)
                     <tr>
                         <td>{{ $value->id }}</td>
                         <td>{{ $value->ipAddress }}</td>
-                        <td>{{ $value->audited }}</td>
+                        <td>
+                            
+                            @if(($value->audited)==1)
+                            <button class="btn btn-small btn-success">
+                              @else
+                              <button class="btn btn-small btn-danger">
+                            @endif
+                        </td>
                         <td>{{ $value->system }}</td>
-                        <td>{{ $value->status }}</td>
+                        <td>@if(($value->status)=='resting')
+                            <button class="btn btn-small btn-success">
+                              @else
+                              <button class="btn btn-small btn-danger">
+                            @endif
+                            
+                            </td>
                         <td>
                         @if(count($value->credentials) >= 1)
         
@@ -83,41 +71,41 @@
                             @endforeach
                         
                         @else
-                               <span class="icon">Hello</span>
+                               <span class="icon">-------</span>
                                 
                                 
                         @endif
                     </td>
                         <!-- we will also add show, edit, and delete buttons -->
                         <td>
+                            <div class="d-flex align-items-start">
                             <!-- delete the shark (uses the destroy method DESTROY /sharks/{id} -->
                             <!-- we will add this later since its a little more complicated than the other two buttons -->
         
                             <!-- show the shark (uses the show method found at GET /sharks/{id} -->
-                            <a class="btn btn-small btn-success" href="{{ URL::to('admin/servers/' . $value->id) }}">Show this Server</a>
+                            <a class="btn btn-small btn-success mr-1" href="{{ URL::to('admin/servers/' . $value->id) }}">Show</a>
         
                             <!-- edit this shark (uses the edit method found at GET /sharks/{id}/edit -->
-                            <a class="btn btn-small btn-info" href="{{ URL::to('admin/servers/' . $value->id . '/edit') }}">Edit this Server</a>
-        
+                            <a class="btn btn-small btn-info mr-1" href="{{ URL::to('admin/servers/' . $value->id . '/edit') }}">Edit</a>
+                            <form  action="/admin/servers/{{$value->id}}" method="POST">
+                                @csrf
+                                @method('delete')
+                                <button type="submit" class=" mr-1 btn btn-small btn-danger"> Remove</button>
+                                
+                              </form> 
+                            </div>
                         </td>
                     </tr>
                 @endforeach
-                </tbody>
-            </table>
-        
-        </div>
+            </tbody>
+        </table>
       </div>
-
-
-    
+      <!-- /.card-body -->
+  </div>
 </div>
+<!-- ./wrapper -->
 
 
 
-</body>
-
-</html>
-
-
-
+</div>
 

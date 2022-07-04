@@ -1,5 +1,5 @@
 @include('layouts.sidebar')
-@include('layouts.topnavbar')
+@include('layouts.navbars.navbarplaybooks')
 @extends('layouts.app')
 
 
@@ -7,9 +7,9 @@
 <div class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
-  <div class="content-wrapper">
+  <div class="content-wrapper p-5">
 
-    <h1 class="m-3">Playbooks Dashboard</h1>
+    <h1 >Playbooks Dashboard</h1>
 
     <!-- will be used to show any messages -->
     @if (Session::has('message'))
@@ -17,7 +17,7 @@
     @endif
 
     <!-- /.card-header -->
-    <div class="card-body p-0 ml-3 mr-5">
+    <div class="card-body p-0">
         <table class="table table-striped">
           <thead>
             <tr>
@@ -27,6 +27,7 @@
                 <th>System</th>
                 <th>GitHub Url</th>
                 <th>Creator</th>
+                <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -46,12 +47,20 @@
                     <!-- we will add this later since its a little more complicated than the other two buttons -->
 
                     <!-- show the shark (uses the show method found at GET /sharks/{id} -->
-                    <a class="btn btn-small btn-success" href="{{ URL::to('admin/playbooks/' . $value->id) }}">Show this shark</a>
+                   <div class="d-flex align-items-start">
+                    <a class="btn btn-small btn-success mr-1" href="{{ URL::to('admin/playbooks/' . $value->id) }}">Show</a>
 
                     <!-- edit this shark (uses the edit method found at GET /sharks/{id}/edit -->
-                    <a class="btn btn-small btn-info" href="{{ URL::to('admin/playbooks/' . $value->id . '/edit') }}">Edit this shark</a>
-
+                    <a class="btn btn-small btn-info mr-1" href="{{ URL::to('admin/playbooks/' . $value->id . '/edit') }}">Edit</a>
+                    <form  action="/admin/playbooks/{{$value->id}}" method="POST">
+                      @csrf
+                      @method('delete')
+                      <button type="submit" class=" mr-1 btn btn-small btn-danger"> Remove</button>
+                      
+                    </form> 
+                   </div>
                 </td>
+                
             </tr>
         @endforeach
           </tbody>

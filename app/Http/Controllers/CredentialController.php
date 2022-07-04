@@ -117,9 +117,9 @@ class CredentialController extends Controller
     $cred = Credential::where('id',$id)->update([
         'username'=>$request->username,
         'password'=>$request->password]);
-    
+        $cred = Credential::find($id);
         Session::flash('message', 'Successfully updated!');
-        return Redirect::to('admin/servers');
+        return Redirect::to('admin/servers/'.$cred->server_id.'/edit');
     }
 
     
@@ -134,10 +134,10 @@ class CredentialController extends Controller
     {
         
         $cred = Credential::find($id);
-        
+      
         $cred->delete();            
             Session::flash('message', 'User Successfully deleted!');
-            return Redirect::to('admin/servers');
+            return Redirect::to('admin/servers/'.$cred->server_id.'/edit');
     }
 }
 

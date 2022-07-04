@@ -1,23 +1,24 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Shark App</title>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-</head>
-<body>
-<div class="container">
+@include('layouts.sidebar')
+@include('layouts.navbars.navbarserver')
+@extends('layouts.app')
 
-    <nav class="navbar navbar-inverse">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="{{ URL::to('admin/servers') }}">Servers</a>
-        </div>
-        <ul class="nav navbar-nav">
-            <li><a href="{{ URL::to('admin/servers') }}">View All Servers</a></li>
-            <li><a href="{{ URL::to('admin/servers/create') }}">Create a Servers</a>
-        </ul>
-    </nav>
+
+@section('content')
+
+
+<div class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+    <div class="content-wrapper p-5">
+
+
 
     <h1>Edit {{ $server->ipAddress }}</h1>
+
+     <!-- will be used to show any messages -->
+     @if (Session::has('message'))
+     <div class="alert alert-info">{{ Session::get('message') }}</div>
+ @endif
+
 
     <!-- if there are creation errors, they will show here -->
     {{ Html::ul($errors->all()) }}
@@ -43,23 +44,37 @@
     {{--        {{ Form::select('shark_level', array('0' => 'Select a Level', '1' => 'Sees Sunlight', '2' => 'Foosball Fanatic', '3' => 'Basement Dweller'), Input::old('shark_level'), array('class' => 'form-control')) }}--}}
     {{--    </div>--}}
 
-    {{ Form::submit('Edit the Server', array('class' => 'btn btn-primary')) }}
+    {{ Form::submit('Edit', array('class' => 'btn btn-primary')) }}
 
     {{ Form::close() }}
+    
 
     <div>
-       
-        <h1>Users</h1><a class="btn btn-small btn-info"  href="{{ URL::to('admin/credentials/create/'.$server->id) }}">Add</a>
-  
-        @if(count($server->credentials) >= 1)
-            
-        <table class=" table  table-bordered">
-            <tr>
-                <td>Username</td>
-                <td>Password</td>
-                <td>Actions</td>
 
+        <div class="row">
+            <div class="col-md-8"> <h1 class="">Users</h1></div>
+            <div class="col-md-4">                    <a class="btn btn-small btn-info"  href="{{ URL::to('admin/credentials/create/'.$server->id) }}">Add</a>
+            </div>
+          </div>
+          
+       
+        
+       
+            <hr>
+        @if(count($server->credentials) >= 1)
+
+        <div class="card-body p-0">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                <th>Username</th>
+                <th>Password</th>
+                <th>Actions</th>
+
+            
             </tr>
+        </thead>
+        <tbody>
             @foreach( $server->credentials as $credential)
 
             <tr>
@@ -67,8 +82,8 @@
                   
                     <td>{{ $credential->password}}</td>
                   <td> 
-                      
-                    <a class="btn btn-small btn-success" href="{{ URL::to('admin/credentials/'.$credential->id.'/edit') }}">Update</a>
+                    <div class="d-flex align-items-start">
+                    <a class="btn btn-small btn-info mr-1" href="{{ URL::to('admin/credentials/'.$credential->id.'/edit') }}">Edit</a>
                     
                     <form  action="/admin/credentials/{{$credential->id}}" method="POST">
                         @csrf
@@ -76,27 +91,30 @@
                         <button type="submit" class="btn btn-danger"> Remove</button>
                         
                       </form> 
-                    
+                    </div>
                     
                     </td>
             </tr>     
                     
                 @endforeach
-
             
+            </tbody>
         </table>
+      </div>
             
-    <h5>Total of users:  {{count($server->credentials)}}</h5>
+    <h5 class="mb-5">Total of users:  {{count($server->credentials)}}</h5>
     @else
-            no Users <br>
+    <br> <p class="ml-5">no Users</p> <br>
             
             
     @endif
 
 
     </div>
+</div>
+
 
 
 </div>
-</body>
-</html>
+</div>
+

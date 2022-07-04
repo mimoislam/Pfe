@@ -11,7 +11,11 @@ class PermissionController extends Controller
 {
     public function index(){
         $permissions = Permission::all();
-
+        /*Permission::create(['name'=>'full edit']);
+        Permission::create(['name'=>'some edits']);
+        Permission::create(['name'=>'full view']);
+        Permission::create(['name'=>'some view']);*/
+        
         return view('admin.permissions.index', compact('permissions'));
     }
 

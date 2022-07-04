@@ -57,7 +57,7 @@ class ScanEngController extends Controller
         $scanEng->save();
 
         // redirect
-        Session::flash('message', 'Successfully created shark!');
+        Session::flash('message', 'Scan Engine Successfully created!');
         return Redirect::to('admin/scanEngs');
 
     }
@@ -114,7 +114,7 @@ class ScanEngController extends Controller
                 $scanEng->port = $request->input('port');
                 $scanEng->save();
                 // redirect
-                Session::flash('message', 'Successfully updated shark!');
+                Session::flash('message', 'Scan Engine Successfully updated!');
                 return Redirect::to('admin/scanEngs');
             }
 
@@ -128,6 +128,10 @@ class ScanEngController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $cred = ScanEng::find($id);
+        
+        $cred->delete();            
+            Session::flash('message', 'Scan Engine Successfully deleted!');
+            return Redirect::to('admin/ScanEngs');
     }
 }
