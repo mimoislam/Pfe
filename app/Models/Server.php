@@ -13,15 +13,19 @@ class Server extends Model
 
     public function  audits(){
         return $this
-            ->belongsToMany(Audit::class,'audit_server','user_id','audit_id')
+            ->belongsToMany(Audit::class,'audit_server','server_id','audit_id')
             ->withTimestamps()
             ->using(AuditServer::class);;
     }
 
-
-    public function  credentials(){
-        return $this->hasMany(Credential::class);   
-        
+    public function  auditservers(){
+        return $this
+            ->hasMany(AuditServer::class,'server_id','id')
+           ;
     }
-   
+    public function  credentials(){
+        return $this->hasMany(Credential::class);
+
+    }
+
 }

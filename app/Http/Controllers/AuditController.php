@@ -9,6 +9,7 @@ use App\Enums\ResultStatus;
 use App\Enums\AuditServerStatus;
 use App\Models\Audit;
 use App\Models\AuditServer;
+use App\Models\Credential;
 use App\Models\File;
 use App\Models\PlayBook;
 use App\Models\ScanEng;
@@ -16,6 +17,7 @@ use App\Models\Server;
 use App\Models\Result;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use View;
 class AuditController extends Controller
@@ -48,18 +50,14 @@ class AuditController extends Controller
 
 
     public function store (Request $request){
-        $request->validate([
-            'description' => 'required',
-            'servers' => 'required',
-            'playbooks' => 'required',
-            'scanEngs' => 'required',
-        ]);
 
         $servers=$request->input('servers');
 
 
 
 
+        $userList=$request->input('users');
+        $regexes=$request->input('regex');
         // change status of  ScanEng
         $scanEng = ScanEng::find($request->input('scanEngs'));
         $scanEng->status=ScanEngStatus::WORKING;
@@ -72,30 +70,59 @@ class AuditController extends Controller
         $audit->user_id=Auth::user()->id;
         $audit->status=AuditStatus::WORKING;
         $audit->save();
-
-
         // get the playBook
-        $playbook = playBook::find($request->input('playbooks'));
+        $playbooks = playBook::find($request->input('playbooks'));
 
-
+        $requestToSend=[];
+        foreach ($playbooks as $playbook){
+            $item=[];
+            $auditServerList=[];
         foreach ($servers as $server)
-        {
+            {
+
                 $serverObject = Server::find($server);
-                $serverObject->status=ServerStatus::WORKING;
+                $serverObject->status = ServerStatus::WORKING;
                 $serverObject->save();
+                $userPrivilege=Credential::find($userList[$serverObject->id]["Privilege"]);
+                $userWithOutPrivilege=Credential::find($userList[$serverObject->id]["NoPrivilege"]);
 
 
+                $auditServer = new AuditServer;
 
-                $auditServer=new AuditServer;
-
-                $auditServer->ipAddress=$serverObject->ipAddress;
-                $auditServer->audit_id=$audit->id;
-                $auditServer->server_id=$serverObject->id;
-                $auditServer->playbook_id=$playbook->id;
+                $auditServer->ipAddress = $serverObject->ipAddress;
+                $auditServer->audit_id = $audit->id;
+                $auditServer->server_id = $serverObject->id;
+                $auditServer->playbook_id = $playbook->id;
+                $auditServer->ipAddress = $serverObject->ipAddress;
+                $auditServer->regex_id = $regexes[$playbook->id];
                 $auditServer->save();
 
+                $item=[
+                    "ip"=>$serverObject->ipAddress,
+		"user"=>$userWithOutPrivilege->username,
+		"password"=>$userWithOutPrivilege->password,
+		"privilege"=>true,
+		"become_user"=>$userPrivilege->username,
+		"become_password"=>$userPrivilege->password
+                ];
+                $productId = DB::getPdo()->lastInsertId();
 
+                array_push($auditServerList,$productId) ;
+
+
+            }
+        $x=[
+            'data'=>$item,
+            'githubUrl'=>$playbook->githubUrl,
+            'auditServer_id'=>$auditServerList
+        ];
+            array_push($requestToSend,$x);
         }
+        $response = Http::get($scanEng->ipAddress.":".$scanEng->port."/request", $requestToSend);
+
+
+
+        return $response;
         return Redirect::to('admin/audit');
     }
     public function show( $id)
@@ -131,10 +158,10 @@ class AuditController extends Controller
          foreach ($request->data as $key => $value) {
             $id_audit_server=$this->checkIfExist('213.12.199.1',$list_of_ids);
             if( $id_audit_server !=-1)
-            {   
+            {
                $result= new Result;
                if( $value['changed']==TRUE)
-               {       
+               {
                    if($key<$sizeRegexExpretions){
                     preg_match('/'.$expretions[$key]->expretion.'/m', $value['stdout'], $matches);
                     $size= sizeof($matches);
@@ -149,7 +176,7 @@ class AuditController extends Controller
                    }else{
                     $result->status=ResultStatus::OUT_OF_REGEX;
                    }
-               }        
+               }
                else
                if ($request->data[0]['failed']==TRUE) {
                 return  ResultStatus::CONFORM_BY_SYSTEM;
@@ -161,11 +188,11 @@ class AuditController extends Controller
                $result->audit_server_id=$id_audit_server;
 
                $result->save();
-           }        
+           }
          }
 
 
-     
+
 //        $this->validate($request, [
 //            'file' => 'required',
 //            'file.*' => 'mimes:json'

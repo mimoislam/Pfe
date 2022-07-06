@@ -71,6 +71,17 @@ class ServerController extends Controller
         return View::make('server.show')
             ->with('server', $server);
     }
+    public function getUser(Request $request)
+    {
+
+        $servers= Server::find($request->input("serverIds"));
+        $credentials=[];
+        foreach ($servers as $server){
+            array_push($credentials,[$server->id=>$server->credentials]);
+        }
+        // show the view and pass the shark to it
+        return  $credentials;
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -81,7 +92,7 @@ class ServerController extends Controller
     public function edit($id)
     {
         $server= Server::find($id);
-        
+
         // show the edit form and pass the shark
         return View::make('server.edit')
             ->with('server', $server);
@@ -107,7 +118,7 @@ class ServerController extends Controller
             $server->system = $request->input('system');
             $server->save();
             // redirect
-       
+
             return back()->with('message', 'Server Successfully Updated!');
         }
 
@@ -123,8 +134,8 @@ class ServerController extends Controller
     public function destroy($id)
     {
         $cred = Server::find($id);
-        
-        $cred->delete();            
+
+        $cred->delete();
             Session::flash('message', 'Server Successfully deleted!');
             return Redirect::to('admin/servers');
     }

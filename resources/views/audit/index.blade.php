@@ -6,9 +6,9 @@
 @section('content')
 <div class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
-    
+
       <div class="content-wrapper">
-    
+
         <h1 class="m-3">Audit Dashboard</h1>
         <div class="py-12 bg-white overflow-hidden shadow-sm sm:rounded-lg">
 
@@ -59,7 +59,7 @@
                     <!-- show the shark (uses the show method found at GET /sharks/{id} -->
 
                     <!-- edit this shark (uses the edit method found at GET /sharks/{id}/edit -->
-
+                <a class="btn btn-small btn-success mr-1" href="{{ URL::to('admin/audit/' . $value->id) }}">Show</a>
                     @if( $value->status!=\App\Enums\AuditStatus::WORKING)
                             <a class="btn btn-small btn-info" href="{{ URL::to('admin/audit/' . $value->id . '/edit') }}">See Result of This Audit</a>
                     @endif

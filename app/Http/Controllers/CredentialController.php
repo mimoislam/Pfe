@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Server;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Credential;
@@ -19,7 +20,7 @@ class CredentialController extends Controller
     {
         $credentials = Credential::all();
 
-        return  View::make('server.index')
+        return  View::make('credential.index')
             ->with([
                 'credentials'=> $credentials,
             ]);;
@@ -30,13 +31,13 @@ class CredentialController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create()
     {
-        
+        $servers=Server::all();
 
         return  View::make('server.adduser')
             ->with([
-                'server_id'=> $id,
+                'servers'=> $servers,
             ]);;
     }
 
@@ -48,17 +49,18 @@ class CredentialController extends Controller
      */
     public function store(Request $request)
     {
-       
         $request->validate([
             'username' => 'required',
             'password' => 'required',
             'server_id' => 'required|numeric',
+            'privilege' => 'required',
 
         ]);
 
         $cred=new Credential;
         $cred->username=$request->input('username');
         $cred->password=$request->input('password');
+        $cred->privilege=$request->input('privilege');
         $cred->server_id = $request->input('server_id');
         $cred->save();
         Session::flash('message', 'Credential Successfully added');
@@ -78,7 +80,7 @@ class CredentialController extends Controller
         return  $server= Credential::where('server_id',$id)->get();
 
         // show the view and pass the shark to it
-        
+
     }
 
     /**
@@ -90,7 +92,7 @@ class CredentialController extends Controller
     public function edit($id)
     {
         $credentials= Credential::find($id);
-        
+
         // show the edit form and pass the shark
         return View::make('server.editcredentials')
             ->with('credentials', $credentials);
@@ -105,11 +107,11 @@ class CredentialController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $request->validate([
             'username' => 'required',
             'password' => 'required',
-            
+
 
         ]);
 
@@ -122,7 +124,7 @@ class CredentialController extends Controller
         return Redirect::to('admin/servers/'.$cred->server_id.'/edit');
     }
 
-    
+
 
     /**
      * Remove the specified resource from storage.
@@ -132,10 +134,10 @@ class CredentialController extends Controller
      */
     public function destroy($id)
     {
-        
+
         $cred = Credential::find($id);
-      
-        $cred->delete();            
+
+        $cred->delete();
             Session::flash('message', 'User Successfully deleted!');
             return Redirect::to('admin/servers/'.$cred->server_id.'/edit');
     }

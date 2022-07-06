@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('server_id');
             $table->string('username');
             $table->string('password');
+            $table->boolean('privilege');
             $table->timestamps();
         });
     }

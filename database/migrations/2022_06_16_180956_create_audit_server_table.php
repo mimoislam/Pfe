@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('server_id');
             $table->integer('playbook_id');
             $table->string('ipAddress');
+            $table->bigInteger('regex_id');
 
             $table->enum('status',\App\Enums\AuditServerStatus::getValues())->default(\App\Enums\AuditServerStatus::WORKING);
 

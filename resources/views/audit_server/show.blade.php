@@ -6,9 +6,9 @@
 @section('content')
 <div class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
-    
+
       <div class="content-wrapper">
-    
+
         <h1 class="m-3">Audit Server Dashboard</h1>
     <div class="py-12 bg-white overflow-hidden shadow-sm sm:rounded-lg">
 
@@ -24,8 +24,13 @@
             <strong>Scan Eng IpAddress :</strong>
             <a class="btn btn-small btn-primary" href="{{ URL::to('admin/scanEngs/' . $auditServer->audit->scanEng->id) }}">{{ $auditServer->audit->scanEng->ipAddress}}</a>
             <br>
-            <strong>Result Of Servers :</strong>
         </p>
+
+            <div >
+
+            <h1>Result of audit</h1>
+                <div class="card-body p-0">
+
             <table class="table table-striped table-bordered mx-5">
                 <thead class="thead-dark">
                 <tr>
@@ -47,23 +52,23 @@
                         <td>
                             {{$value->id}}
 
-                    </td>
+                        </td>
                         <td>
-                                {{$value->result}}
+                            {{$value->result}}
 
                         </td>
                         <td>
 
-                                {{$value->module}}
+                            {{$value->module}}
 
                         </td>
                         <td>
                             {{-- <a class= "btn btn-dark" style="margin-bottom: 10px" href="{{ URL::to('admin/playbooks/' . $value->playbook_id) }}"> --}}
-                                {{$value->auditServer->ipAddress}}
+                            {{$value->auditServer->ipAddress}}
                             {{-- </a> --}}
                         </td>
                         <td>
-                                {{$value->status}}
+                            {{$value->status}}
                         </td>
                     </tr>
                 @endforeach
@@ -71,8 +76,11 @@
                 </tbody>
 
             </table>
+                </div>
 
-        </p>
+
+                <!-- /.card-body -->
+            </div>
         </div>
     </div>
 </div>

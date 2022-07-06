@@ -87,6 +87,22 @@ class PlayBookController extends Controller
         return View::make('playBook.show')
             ->with('playbook', $playbook);
     }
+    public function getRegexes( )
+    {
+
+        // get the shark
+        $playbooks= PlayBook::all();
+        $listRegexes=[];
+        foreach ($playbooks as $item){
+            if($item->regexs->count()!=0) {
+                array_push($listRegexes, [$item->id => $item->regexs]);
+            }        }
+        // show the view and pass the shark to it
+        return [
+            "playbooks"=>$playbooks,
+            "regexes"=>$listRegexes
+        ];
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -113,7 +129,7 @@ class PlayBookController extends Controller
      */
     public function update(Request $request,$id)
     {
-      
+
         // validate
         // read more on validation at http://laravel.com/docs/validation
         $rules = array(
@@ -145,8 +161,8 @@ class PlayBookController extends Controller
     public function destroy( $id)
     {
        $cred = PlayBook::find($id);
-        
-        $cred->delete();            
+
+        $cred->delete();
             Session::flash('message', 'playbook Successfully deleted!');
             return Redirect::to('admin/playbooks');
     }

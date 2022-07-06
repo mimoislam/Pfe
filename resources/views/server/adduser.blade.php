@@ -29,10 +29,19 @@
         {{ Form::label('password', 'password') }}
         {{ Form::text('password', Input::old(''), array('class' => 'form-control')) }}
     </div>
+        <div class="form-group">
+        {{ Form::label('privilege', 'Privilege') }}
+        {{ Form::checkbox('privilege',TRUE)}}
+    </div>
 
-    <input type="hidden" id= "server_id" name="server_id" value="{{$server_id}}">
-    
+        <select name="server_id">
+            @foreach ($servers as $key => $value)
+                <option value="{{ $value->id }}"
 
+                >{{ $value->ipAddress }}</option>
+            @endforeach
+        </select>
+        <br>
 
 {{--    <div class="form-group">--}}
 {{--        {{ Form::label('shark_level', 'shark Level') }}--}}

@@ -1,20 +1,23 @@
-
-<!DOCTYPE html>
-<html>
-<head>
-
-    
-    <title>Shark App</title>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-</head>
-<body>
-<div class="container">
+@include('layouts.sidebar')
+@include('layouts.navbars.navbarplaybooks')
+@extends('layouts.app')
 
 
+@section('content')
+    <div class="hold-transition sidebar-mini layout-fixed">
+        <div class="wrapper">
 
-    <h1>Create a shark</h1>
+            <div class="content-wrapper p-5">
 
-    <!-- if there are creation errors, they will show here -->
+                <h1 >Regex Dashboard</h1>
+
+                <!-- will be used to show any messages -->
+                @if (Session::has('message'))
+                    <div class="alert alert-info">{{ Session::get('message') }}</div>
+                @endif
+
+
+                <!-- if there are creation errors, they will show here -->
     <form action="{{ url ('admin/regex')}}" method="POST">
 
         @csrf
@@ -39,7 +42,7 @@
 
         @endif
 
-   
+
 
         @if (Session::has('success'))
 
@@ -53,9 +56,13 @@
 
         @endif
 
-   
+        <select name="playbook_id" id="playbook_id">
+            @foreach($playbooks as $item )
+                <option value="{{$item->id}}">{{$item->name}}</option>
+            @endforeach
+        </select>
 
-        <table class="table table-bordered" id="dynamicTable">  
+        <table class="table table-bordered" id="dynamicTable">
 
             <tr>
 
@@ -67,56 +74,60 @@
 
             </tr>
 
-            <tr>  
+            <tr>
 
-                <td><input type="text" name="expretions[0]" placeholder="Enter your Name" class="form-control" /></td>  
+                <td><input type="text" name="expretions[0]" placeholder="Enter your Name" class="form-control" /></td>
 
 
 
-                <td><button type="button" name="add" id="add" class="btn btn-success">Add More</button></td>  
+                <td><button type="button" name="add" id="add" class="btn btn-success">Add More</button></td>
 
-            </tr>  
+            </tr>
 
-        </table> 
+        </table>
 
-    
+
 
         <button type="submit" class="btn btn-success">Save</button>
 
     </form>
 
 </div>
-</body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-<script type="text/javascript">
-   
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-   var i = 0;
+    <script type="text/javascript">
 
-       
 
-$("#add").click(function(){
+        var i = 0;
 
 
 
-    ++i;
+        $("#add").click(function(){
 
 
 
-    $("#dynamicTable").append('<tr><td><input type="text" name="expretions['+i+']" placeholder="Enter your Name" class="form-control" /></td><td><button type="button" class="btn btn-danger remove-tr">Remove</button></td></tr>');
-
-});
+            ++i;
 
 
 
-$(document).on('click', '.remove-tr', function(){  
+            $("#dynamicTable").append('<tr><td><input type="text" name="expretions['+i+']" placeholder="Enter your Name" class="form-control" /></td><td><button type="button" class="btn btn-danger remove-tr">Remove</button></td></tr>');
 
-     $(this).parents('tr').remove();
-
-});  
+        });
 
 
-</script>
-</html>
+
+        $(document).on('click', '.remove-tr', function(){
+
+            $(this).parents('tr').remove();
+
+        });
+
+
+    </script> <!-- ./wrapper -->
+
+
+
 

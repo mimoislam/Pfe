@@ -65,6 +65,9 @@ Route::name('admin.')->prefix('admin')->group(function () {
     Route::resource('regex', RegexController::class);
     Route::get('/auditserver/{id}/manual', [AuditServerController ::class,'manual']);
     Route::post('/auditserver/{id}/manual', [AuditServerController ::class,'manualstore']);
+    Route::get('/auditserver', [AuditServerController ::class,'index']);
+    Route::get('/result', [AuditServerController ::class,'resultIndex']);
+    Route::get('/result/{id}', [AuditServerController ::class,'resultShow']);
 
 
 
@@ -80,8 +83,24 @@ Route::name('admin.')->prefix('admin')->group(function () {
 
 
 });
+
+Route::post('/server/users', [ServerController ::class,'getUser']);
+Route::get('/playbook/regexes', [PlayBookController ::class,'getRegexes']);
 /*Route::get('/admin',function(){
     return view('admin.index');
 })->middleware(['auth','role:admin'])->name('admin.index');*/
+Route::get('/test', function (){
+    $servers=\App\Models\Server::all();
+    $scanEngs=\App\Models\ScanEng::all();
+    return View::make('testvue')
+        ->with(['servers'=> $servers,"scanEngs"=>$scanEngs]);
+});
+
+Route::get('/comp', function (){
+    $server=\App\Models\AuditServer::find(6);
+
+    return View::make('comarition.index')
+        ->with(['auditServer1'=> $server,"auditServer2"=>$server]);
+});
 
 require __DIR__.'/auth.php';
