@@ -15,10 +15,14 @@ use App\Models\PlayBook;
 use App\Models\ScanEng;
 use App\Models\Server;
 use App\Models\Result;
+use App\Models\Regex;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Http;
+
 use View;
 class AuditController extends Controller
 {
@@ -97,14 +101,14 @@ class AuditController extends Controller
                 $auditServer->regex_id = $regexes[$playbook->id];
                 $auditServer->save();
 
-                $item=[
+                array_push($item,[
                     "ip"=>$serverObject->ipAddress,
 		"user"=>$userWithOutPrivilege->username,
 		"password"=>$userWithOutPrivilege->password,
 		"privilege"=>true,
 		"become_user"=>$userPrivilege->username,
 		"become_password"=>$userPrivilege->password
-                ];
+                ]);
                 $productId = DB::getPdo()->lastInsertId();
 
                 array_push($auditServerList,$productId) ;
@@ -118,7 +122,7 @@ class AuditController extends Controller
         ];
             array_push($requestToSend,$x);
         }
-        $response = Http::get($scanEng->ipAddress.":".$scanEng->port."/request", $requestToSend);
+        $response = Http::post($scanEng->ipAddress.":".$scanEng->port."/request", $requestToSend);
 
 
 
@@ -146,17 +150,17 @@ class AuditController extends Controller
             if($request->playbook_id==$value->playbook_id){
                 array_push($list_of_ids,
                 ["id"=>$value->id,"ipAddress"=>$value->ipAddress]);
-                $value->status=AuditServerStatus::FINISHED;
+                $value->status=AuditServerStatus::CONFORM_BY_SYSTEM;
                 $value->save();
             }
         }
 
-        $regexs=Playbook::find($value->playbook_id)->regexs;
-        $expretions=$regexs[0]->expretions;
+        $regexs=Regex::find($value->regex_id);
+        $expretions=$regexs->expretions;
         $sizeRegexExpretions=sizeof($expretions);
 
          foreach ($request->data as $key => $value) {
-            $id_audit_server=$this->checkIfExist('213.12.199.1',$list_of_ids);
+            $id_audit_server=$this->checkIfExist('192.168.1.44',$list_of_ids);
             if( $id_audit_server !=-1)
             {
                $result= new Result;
